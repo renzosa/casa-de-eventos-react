@@ -78,7 +78,7 @@ json-server --watch eventos.json
 
 # Implementação de conteinerização
 
-## Compose com build
+## Compose executando build diretamente do dockerfile
 
 ```sh
 docker compose -f docker-compose.toBuild.yml up -d --build
@@ -87,16 +87,25 @@ docker compose -f docker-compose.toBuild.yml up -d --build
 ## Buildando as imagens no registry de exemplo `renzosa`
 
 ```sh
+# Setando o registry de exemplo `renzosa`
 MY_REGISTRY=renzosa
-docker buildx build -t ${MY_REGISTRY}/eventos-frontend .
-docker buildx build -t ${MY_REGISTRY}/eventos-backend .
 
+# Buildando as imagens
+docker buildx build -t ${MY_REGISTRY}/eventos-frontend -f Dockerfile.frontend .
+docker buildx build -t ${MY_REGISTRY}/eventos-backend -f Dockerfile.backend .
+
+# Logando no registry de exemplo `renzosa`
 docker login
+
+# Push das imagens para o registry de exemplo `renzosa`
 docker push ${MY_REGISTRY}/eventos-frontend
-docker push ${MY_REGISTRY}/eventos-backend
+docker push ${MY_REGISTRY}/eventos-backend0
+
+# Rodando o compose com as imagens publicas do registry `renzosa` setada via env
+MY_REGISTRY=renzosa docker compose up -d
 ```
 
-### Exemplo de Compose com imagens do registry `renzosa`
+### Exemplo de Compose com imagens publicas do registry `renzosa` fixas
 
 ```sh
 docker compose -f docker-compose.renzosa.yml up -d

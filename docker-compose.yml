@@ -1,0 +1,17 @@
+services:
+  frontend:
+    image: ${MY_REGISTRY}/eventos-frontend
+    ports:
+      - "80:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:3000
+
+  backend:
+    image: ${MY_REGISTRY}/eventos-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./eventos.json:/app/eventos.json
