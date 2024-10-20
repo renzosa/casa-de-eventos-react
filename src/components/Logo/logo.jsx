@@ -9,7 +9,7 @@ const LogoImage = styled.img`
 function Logo() {
     return (
             <LogoContainer>
-                <LogoImage src="./images/logo.svg" alt="Logomarca da casa de eventos" />
+                <LogoImage src="/images/logo.svg" alt="Logomarca da casa de eventos" />
             </LogoContainer>
     )
 }
