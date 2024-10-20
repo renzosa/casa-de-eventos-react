@@ -1,0 +1,11 @@
+FROM node:20.5.1
+
+WORKDIR /app
+
+RUN npm install -g json-server
+
+COPY eventos.json .
+
+EXPOSE 3000
+
+CMD ["json-server", "--watch", "eventos.json", "--host", "0.0.0.0"]

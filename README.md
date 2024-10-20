@@ -75,3 +75,29 @@ json-server --watch eventos.json
 ```
 
 ### _Pronto! Seu projeto já estará rodando no endereço http://localhost:5173_
+
+# Implementação de conteinerização
+
+## Compose com build
+
+```sh
+docker compose -f docker-compose.toBuild.yml up -d --build
+```
+
+## Buildando as imagens no registry de exemplo `renzosa`
+
+```sh
+MY_REGISTRY=renzosa
+docker buildx build -t ${MY_REGISTRY}/eventos-frontend .
+docker buildx build -t ${MY_REGISTRY}/eventos-backend .
+
+docker login
+docker push ${MY_REGISTRY}/eventos-frontend
+docker push ${MY_REGISTRY}/eventos-backend
+```
+
+### Exemplo de Compose com imagens do registry `renzosa`
+
+```sh
+docker compose -f docker-compose.renzosa.yml up -d
+```
